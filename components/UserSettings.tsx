@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import Modal from './Modal';
-import { useUI, useUser, useAgent } from '../lib/state';
+import { useUI, useUser, useAgent, useSettings } from '../lib/state';
 import {
   INTERLOCUTOR_VOICE,
   INTERLOCUTOR_VOICES,
@@ -11,6 +11,7 @@ import {
 
 export default function UserSettings() {
   const { name, info, setName, setInfo } = useUser();
+  const { apiKey, setApiKey } = useSettings();
   const { current, update: updateAgent } = useAgent();
   const { setShowUserConfig } = useUI();
 
@@ -63,6 +64,29 @@ export default function UserSettings() {
                   className="bg-gray-800 border border-gray-600 rounded-md p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full resize-none"
                 />
               </div>
+            </div>
+          </div>
+
+          <div className="pt-6 border-t border-gray-700">
+            <p className="text-gray-300 mb-2">
+              مفتاح واجهة برمجة التطبيقات (API Key):
+            </p>
+            <p className="text-sm text-gray-400 mb-4">
+              يمكنك استخدام مفتاح API الخاص بك في Gemini. إذا تركته فارغًا، فسيتم استخدام المفتاح الافتراضي.
+            </p>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="apiKey" className="text-gray-200">
+                مفتاح Gemini API
+              </label>
+              <input
+                type="password"
+                id="apiKey"
+                name="apiKey"
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                placeholder="أدخل مفتاح API الخاص بك هنا"
+                className="bg-gray-800 border border-gray-600 rounded-md p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+              />
             </div>
           </div>
 
