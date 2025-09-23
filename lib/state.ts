@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist } from 'zustand';
 import { Agent, VisionAssistant } from './presets/agents';
 
 /**
