@@ -3,7 +3,28 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { Agent, VisionAssistant } from './presets/agents';
+
+/**
+ * Settings
+ */
+
+export const useSettings = create(
+  persist<{
+    apiKey?: string;
+    setApiKey: (apiKey: string) => void;
+  }>(
+    (set) => ({
+      apiKey: '',
+      setApiKey: (apiKey) => set({ apiKey }),
+    }),
+    {
+      name: 'google-ai-studio-gemini-vision',
+    },
+  ),
+);
+
 
 /**
  * User

@@ -18,18 +18,14 @@
  * limitations under the License.
  */
 
+import ApiKeyGate from './components/ApiKeyGate';
 import ControlTray from './components/console/control-tray/ControlTray';
 import ErrorScreen from './components/demo/ErrorSreen';
 import KeynoteCompanion from './components/demo/keynote-companion/KeynoteCompanion';
 import Header from './components/Header';
 import UserSettings from './components/UserSettings';
 import { LiveAPIProvider } from './contexts/LiveAPIContext';
-import { useUI } from './lib/state';
-
-const API_KEY = process.env.API_KEY as string;
-if (!API_KEY) {
-  throw new Error('Missing required environment variable: API_KEY');
-}
+import { useUI, useSettings } from './lib/state';
 
 /**
  * Main application component that provides a streaming interface for Live API.
@@ -37,16 +33,23 @@ if (!API_KEY) {
  */
 function App() {
   const { showUserConfig } = useUI();
+  const { apiKey } = useSettings();
+
+  // If there is no API Key, we show the API Key gate.
+  if (!apiKey) {
+    return <ApiKeyGate />;
+  }
+
   return (
     <div className="bg-black text-white h-screen w-screen flex flex-col">
-      <LiveAPIProvider apiKey={API_KEY}>
+      <LiveAPIProvider apiKey={apiKey}>
         <ErrorScreen />
         <Header />
 
         {showUserConfig && <UserSettings />}
         <main className="flex-1 flex flex-col items-center justify-center relative">
-            <KeynoteCompanion />
-            <ControlTray />
+          <KeynoteCompanion />
+          <ControlTray />
         </main>
       </LiveAPIProvider>
     </div>
